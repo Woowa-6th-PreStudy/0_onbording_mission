@@ -22,21 +22,20 @@ public class Problem2 {
             int size = stack.size();
             if (size == 0) {
                 stack.add(word);
+                continue;
+            }
+            if (ignoreLastNode) {
+                stack.add(word);
+                ignoreLastNode = false;
             } else {
-                if (ignoreLastNode) {
-                    stack.add(word);
-                    ignoreLastNode = false;
-                } else {
-                    String last = stack.remove(size - 1);
-                    if (word.equals(last)) {
-                        // 단어가 같은 경우
-                        ignoreLastNode = true;
-                    } else {
-                        // 다른 단어의 경우
-                        stack.addAll(Arrays.asList(last, word));
-                    }
+                String last = stack.remove(size - 1);
+                if (word.equals(last)) {
+                    // 단어가 같은 경우
+                    ignoreLastNode = true;
+                    continue;
                 }
-
+                // 다른 단어의 경우
+                stack.addAll(Arrays.asList(last, word));
             }
         }
         return String.join("", stack);
